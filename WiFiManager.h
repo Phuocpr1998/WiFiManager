@@ -350,6 +350,8 @@ class WiFiManager
     // set port of webserver, 80
     void          setHttpPort(uint16_t port);
 
+    void          setMOWASerialDevice(String deviceSerial);
+
     std::unique_ptr<DNSServer>        dnsServer;
 
     #if defined(ESP32) && defined(WM_WEBSERVERSHIM)
@@ -381,6 +383,10 @@ class WiFiManager
     String        _apPassword             = "";
     String        _ssid                   = "";
     String        _pass                   = "";
+
+    // MOWA Device
+    String        _serial                 = "";
+
     
     // options flags
     unsigned long _configPortalTimeout    = 0; // ms close config portal loop if set (depending on  _cp/webClientCheck options)

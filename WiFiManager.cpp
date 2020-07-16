@@ -1494,6 +1494,7 @@ void WiFiManager::handleInfo() {
     infos = 27;
     String infoids[] = {
       F("esphead"),
+      F("serial"),
       F("uptime"),
       F("chipid"),
       F("fchipid"),
@@ -1526,6 +1527,7 @@ void WiFiManager::handleInfo() {
     infos = 22;
     String infoids[] = {
       F("esphead"),
+      F("serial"),
       F("uptime"),
       F("chipid"),
       F("chiprev"),
@@ -1566,6 +1568,10 @@ void WiFiManager::handleInfo() {
   DEBUG_WM(DEBUG_DEV,F("Sent info page"));
 }
 
+void WiFiManager::setMOWASerialDevice(String deviceSerial) {
+  this->_serial = deviceSerial;
+}
+
 String WiFiManager::getInfoData(String id){
 
   String p;
@@ -1577,6 +1583,11 @@ String WiFiManager::getInfoData(String id){
     p = FPSTR(HTTP_INFO_uptime);
     p.replace(FPSTR(T_1),(String)(millis() / 1000 / 60));
     p.replace(FPSTR(T_2),(String)((millis() / 1000) % 60));
+  }
+  else if(id==F("serial")){
+    // subject to rollover!
+    p = FPSTR(HTTP_INFO_serial);
+    p.replace(FPSTR(T_1),(String)(this->_serial));
   }
   else if(id==F("chipid")){
     p = FPSTR(HTTP_INFO_chipid);
